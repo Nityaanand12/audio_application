@@ -3,9 +3,11 @@
 <head>
 	<title></title>
 </head>
+{% load static %}
 
-<link rel="stylesheet" href="{% static audios/videojs-record/dist/css/video-js.min.css' %}" />
-<link rel="stylesheet" href="{% static audios/videojs-record/dist/css/videojs.record.min.css' %}" />
+<link href="{% static 'audios/node_modules/video.js/dist/video-js.min.css' %}" rel="stylesheet">
+<link href="{% static 'node_modules/videojs-wavesurfer/dist/css/videojs.wavesurfer.min.css" rel="stylesheet">
+<!--<link href="dist/css/videojs.record.css" rel="stylesheet">-->
 
 <style>
     /* change player background color */
@@ -20,15 +22,16 @@
     <span class="upload-comp">Uploading Complete</span>
 
 <!-- Requires a lot of external js, I think I have added them all. -->
-<script src="{% static audios/videojs-record/video.min.js' %}"></script>
-<script src="{% static audios/videojs-record/RecordRTC.min.js' %}"></script>
-<script src="{% static audios/videojs-record/adapter.js' %}"></script>
-<script src="{% static audios/wavesurfer/dist/wavesurfer.min.js' %}"></script>
-<script src="{% static audios/wavesurfer/dist/plugin/wavesurfer.microphone.min.js' %}"></script>
-<script src="{% static audios/videojs-wavesurfer/dist/videojs.wavesurfer.min.js' %}"></script>
+  <script src="{% static 'audios/node_modules/video.js/dist/video.min.js' %}"></script>
+  <script src="{% static 'audios/node_modules/recordrtc/RecordRTC.js' %}"></script>
+  <script src="{% static 'audios/node_modules/webrtc-adapter/out/adapter.js' %}"></script>
+  <script src="{% static 'audios/node_modules/wavesurfer.js/dist/wavesurfer.min.js' %}"></script>
+  <script src="{% static 'audios/node_modules/wavesurfer.js/dist/plugin/wavesurfer.microphone.min.js' %}"></script>
+  <script src="{% static 'audios/node_modules/videojs-wavesurfer/dist/videojs.wavesurfer.min.js' %}"></script>
 
-<script src="{% static audios/videojs-record/dist/videojs.record.min.js' %}"></script>
+  <script src="../dist/videojs.record.js"></script>
 
+  <script src="browser-workarounds.js"></script>
 <script>
 // Handle audio record and upload
 $(document).ready(function(){
@@ -86,7 +89,7 @@ $(document).ready(function(){
         btn.html('Saving...').prop('disabled', true).addClass('disable-btn');
         var myFile = new File([player.recordedData], 'audio.webm');
         var csrf = $('input[name="csrfmiddlewaretoken"]').val();
-        var url = "{% url audios:myurl' %}";
+        var url = "{% url 'audios:myurl' %}";
         var data = new FormData();
         data.append('recorded_audio', myFile);
         data.append('csrfmiddlewaretoken', csrf);
